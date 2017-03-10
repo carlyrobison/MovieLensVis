@@ -69,6 +69,14 @@ def read_ratings(filename, movie_names):
     # return it
     return np.asarray(Y), movie_ratings
 
+def save_matrix(V, filename):
+    '''Dump trained matrix into a file'''
+    np.savetxt(filename, V, fmt='%f')
+
+def load_matrix(filename):
+    '''Load dumped matrix from file'''
+    return np.loadtxt(filename, dtype=float)
+
 if __name__ == '__main__':
     movie_names, movie_genres, genres  = read_movies('movies.txt')
     Y, movie_ratings = read_ratings('data.txt', movie_names)
