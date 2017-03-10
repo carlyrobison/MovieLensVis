@@ -55,6 +55,7 @@ def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
     """
     Factorizes the M x N matrix Y into the product of an M x K matrix
     U and a K x N matrix V (i.e. Y = UV).
+    ^ LIES Y is not MxN
 
     Uses a learning rate of <eta> and regularization of <reg>. Stops after
     <max_epochs> epochs, or once the magnitude of the decrease in regularized

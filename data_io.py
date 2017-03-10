@@ -23,21 +23,54 @@ def read_movies(filename):
             #print d
 
             # extract stuff
-            num = d[0]
+            movie_id = d[0]
             title = d[1]
             genre = [genre_labels[i] for i in range(19) if d[i + 2] == '1']
-            # print num, title, genre
+            # print movie_id, title, genre
 
             # add the info to the relevant db
-            movie_names[num] = title
-            movie_genres[num] = genre
+            movie_names[movie_id] = title
+            movie_genres[movie_id] = genre
             for g in genre:
-                genres[g].add(num)
+                genres[g].add(movie_id)
 
     # return it
     return movie_names, movie_genres, genres
 
+def read_ratings(filename, movie_names):
+    '''
+    Gets users and their ratings for movies from the given file
+    '''
+    Y = [] # the input data
+
+    movie_ratings = {}
+
+    # aggregate ratings by movie
+    for m in movie_names.keys():
+        movie_ratings[m] = []
+
+    with open(filename, 'rU') as f:
+        for line in f:
+            # see what we're working with
+            #print "line:", line
+            d = line.strip('\n').split('\t')
+            #print d
+
+            # extract stuff
+            user_id = int(d[0])
+            movie_id = d[1]
+            rating = int(d[2])
+            # print user_id, movie_id, rating
+
+            # add the info to the relevant db
+            Y.append([user_id, int(movie_id), rating])
+            movie_ratings[movie_id].append(rating)
+
+    # return it
+    return np.asarray(Y), movie_ratings
+
 if __name__ == '__main__':
     movie_names, movie_genres, genres  = read_movies('movies.txt')
+    Y, movie_ratings = read_ratings('data.txt', movie_names)
     #print "movies:", [movies[d] for d in movies.keys()[:10]]
     # print "genres:", genres[:10]
