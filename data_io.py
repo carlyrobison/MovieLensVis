@@ -1,4 +1,4 @@
-# importing data from the input filed
+# importing data from the input files
 import numpy as np
 
 genre_labels = ['Unknown', 'Action', 'Adventure', 'Animation', 'Childrens', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Film-Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
@@ -9,7 +9,7 @@ def read_movies(filename):
     '''
     movie_names = {} # movie ID to name
     movie_genres = {} # indexed by movie ID
-    genres = {}
+    genres = {} # genre name to set of IDs
 
     # create the genre fields
     for g in genre_labels:
@@ -17,16 +17,12 @@ def read_movies(filename):
 
     with open(filename, 'rU') as f:
         for line in f:
-            # see what we're working with
-            #print "line:", line
             d = line.strip('\n').split('\t')
-            #print d
 
             # extract stuff
             movie_id = d[0]
             title = d[1]
             genre = [genre_labels[i] for i in range(19) if d[i + 2] == '1']
-            # print movie_id, title, genre
 
             # add the info to the relevant db
             movie_names[movie_id] = title
@@ -51,16 +47,12 @@ def read_ratings(filename, movie_names):
 
     with open(filename, 'rU') as f:
         for line in f:
-            # see what we're working with
-            #print "line:", line
             d = line.strip('\n').split('\t')
-            #print d
 
             # extract stuff
             user_id = int(d[0])
             movie_id = d[1]
             rating = int(d[2])
-            # print user_id, movie_id, rating
 
             # add the info to the relevant db
             Y.append([user_id, int(movie_id), rating])
@@ -76,6 +68,8 @@ def save_matrix(V, filename):
 def load_matrix(filename):
     '''Load dumped matrix from file'''
     return np.loadtxt(filename, dtype=float)
+
+
 
 if __name__ == '__main__':
     movie_names, movie_genres, genres  = read_movies('movies.txt')
