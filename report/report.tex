@@ -1,0 +1,97 @@
+\newif\ifshowsolutions
+\showsolutionsfalse
+\input{preamble}
+
+\usepackage{listings}
+\usepackage{caption}
+
+\captionsetup{margin=0.5in}
+\captionsetup{labelfont=bf}
+
+\newcommand{\boldline}[1]{\underline{\textbf{#1}}}
+\newcommand{\plotteddata}[3]{
+  \begin{figure}[h]
+  \caption{#1}
+  \centering
+  \includegraphics[width=#3\textwidth]{#2}
+  \end{figure}
+}
+
+\chead{%
+  {\vbox{%
+      \vspace{2mm}
+      \large
+      Machine Learning \& Data Mining \hfill
+      Caltech CS/CNS/EE 155 \hfill \\[1pt]
+      Miniproject 3\hfill
+      March 10, 2017 \\
+      {\sc MovieLensVis}\\
+      by Shari Kuroyama and Carly Robison
+    }
+  }
+}
+
+
+
+\begin{document}
+\pagestyle{fancy}
+
+
+
+\section{Data Formatting}
+
+\subsection{Methods}
+
+\subsection{Modifications}
+
+
+
+\section{Basic Visualizations}
+
+\subsection{Methods}
+
+\subsection{Observations}
+What, in general, did you observe? Did the results match what you would expect to see? How do the ratings from the most popular movies compare to the ratings of the best movies? How do the ratings of the three genres you chose compare to one another?
+\begin{enumerate}
+    \item All ratings in the MovieLens Dataset.
+    \item All ratings of the ten most popular movies (movies which have gotten the most ratings).
+    \item All ratings of the ten best movies (movies with the highest average ratings).
+    \item All ratings of movies from three genres of your choice (create three separate visualizations for this problem).
+\end{enumerate}
+
+
+
+\section{Matrix Factorization Visualization}
+
+\subsection{Packages Used}
+
+\subsection{Algorithm}
+
+\subsection{Observations}
+Your report should contain a section dedicated to matrix factorization visualizations. What, in general, did you observe? Did the results match what you would expect to see? How does the visualization of the most popular movies compare to that of the best movies? How do the visualizations of the three genres you chose compare to one another?
+
+
+
+\section{Conclusion}
+\subsection{Division of work}
+Shari:
+
+Carly:
+
+\subsection{Discoveries}
+What are your conclusions/observations about the models you used and the visualizations generated?
+
+\subsection{Challenges}
+
+
+
+\subsection{Concluding Remarks}
+
+Our code is available at \href{https://github.com/carlyrobison/MovieLensVis/}{this} github repo.
+
+
+
+
+
+
+\end{document}
