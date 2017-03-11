@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
 import data_io
@@ -55,10 +56,16 @@ def top_ten_rated(movie_ratings):
 
 def plot_histogram(labels, ratings, title):
     r = 5   # (Ratings range from 1 to 5)
-    colors = ['0.1', '0.9'] * 5
+    # Note: this_colors is only rainbow for ten colors.
+    if len(labels) == 10:
+        this_colors = ['r', 'orange', 'gold', 'lawngreen', 'g', 
+                   'turquoise', 'b', 'purple', 'm', 'brown']
+    else:
+        this_colors = ['r'] * len(labels)
     n, bins, patches = plt.hist(ratings, r,
-                        facecolor=colors)
+                        color=this_colors)
 
+    plt.xticks(range(r+1), range(r+1))
     plt.xlabel('Ratings')
     plt.ylabel('Frequency')
     plt.title(title)
@@ -71,11 +78,17 @@ def plot_histogram(labels, ratings, title):
         if max(num_ratings) > max_ratings:
             max_ratings = max(num_ratings)
     plt.axis([1, r, 0, max_ratings])
-    plt.grid(True)
+
+    handle_list = []
+    for i in range(len(labels)):
+        handle_list += [mpatches.Patch(color=this_colors[i], label=labels[i])]
+
+    plt.legend(handles=handle_list)
 
     plt.show()
 
 def plot_histogram_stack(labels, ratings, title):
+    '''Doesn't look as nice, don't use'''
     r = 5   # (Ratings range from 1 to 5)
 
     plot_ratings = [0 for i in range(r)]
@@ -117,7 +130,6 @@ if __name__ == '__main__':
     print [len(movie_ratings[movie]) for movie in popular]
     print movie_ratings[popular[0]]
 
-    '''
     print "-"*50
 
     popular = top_ten_rated(movie_ratings)
@@ -126,10 +138,9 @@ if __name__ == '__main__':
     print [np.mean(movie_ratings[movie]) for movie in popular]
 
     print movie_ratings['814']
-    '''
 
-    plot_histogram_stack([movie_names[movie] for movie in popular], 
+    plot_histogram([movie_names[movie] for movie in popular], 
         [movie_ratings[movie] for movie in popular],
-        "Most rated movies")
+        "Highest rated movies")
 
 
