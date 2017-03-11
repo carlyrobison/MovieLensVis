@@ -3,6 +3,12 @@ import numpy as np
 
 genre_labels = ['Unknown', 'Action', 'Adventure', 'Animation', 'Childrens', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'FilmNoir', 'Horror', 'Musical', 'Mystery', 'Romance', 'SciFi', 'Thriller', 'War', 'Western']
 
+# the graduate, the right stuff, patton, et, die hard, psycho,
+# star trek the motion picture, jaws, aliens, terminator
+selected_movies = ['197', '193', '205', '423', '144', '185', '449', '234', '176', '195']
+
+star_movies = ['50', '62', '124', '146', '222', '227', '228', '229', '230', '271', '380', '449', '1061', '1068', '1265', '1293', '1464', '172', '181']
+
 def read_movies(filename):
     '''
     Gets movies and their genres from the given file.
@@ -22,7 +28,7 @@ def read_movies(filename):
             # extract stuff
             movie_id = d[0]
             title = d[1]
-            genre = [genre_labels[i] for i in range(19) if d[i + 2] == '1']
+            genre = [genre_labels[i] for i in range(len(genre_labels)) if d[i + 2] == '1']
 
             # add the info to the relevant db
             movie_names[movie_id] = title

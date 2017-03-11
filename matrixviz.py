@@ -64,6 +64,13 @@ def ensure_unicode(v): # needed bc weird errors
         v = v.decode('latin-1')
     return unicode(v)  # convert anything not a string to unicode too
 
+def plot_handpicked(X, movie_names, movie_ratings):
+    plot_movie_ids("Handpicked", data_io.selected_movies, X)
+
+def plot_star(X, movie_names, movie_ratings):
+    plot_movie_ids("Movies with Star in Title", data_io.star_movies, X)
+
+
 if __name__ == '__main__':
     movie_names, movie_genres, genres  = data_io.read_movies('movies.txt')
     Y, movie_ratings = data_io.read_ratings('data.txt', movie_names)
@@ -81,9 +88,11 @@ if __name__ == '__main__':
     X = data_io.load_matrix('savedProj.txt')
     # print X.shape
 
-    plot_popular(X, movie_names, movie_ratings)
-    plot_highest_rated(X, movie_names, movie_ratings)
-    plot_genres(X, movie_names, movie_ratings, genres)
+    #plot_popular(X, movie_names, movie_ratings)
+    #plot_highest_rated(X, movie_names, movie_ratings)
+    #plot_genres(X, movie_names, movie_ratings, genres)
+    plot_handpicked(X, movie_names, movie_ratings)
+    plot_star(X, movie_names, movie_ratings)
 
     try:
         diag.show_plots()
