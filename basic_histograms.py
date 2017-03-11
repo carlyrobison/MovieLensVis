@@ -55,7 +55,7 @@ def top_ten_rated(movie_ratings):
     ret.reverse()
     return ret
 
-def plot_histogram(labels, ratings, title):
+def plot_histogram(labels, ratings, title, filename=None):
     r = 5   # (Ratings range from 1 to 5)
     # Note: this_colors is only rainbow for ten colors.
     if len(labels) == 10:
@@ -86,9 +86,11 @@ def plot_histogram(labels, ratings, title):
 
     plt.legend(handles=handle_list)
 
+    if filename != None:
+        plt.savefig(filename)
     plt.show()
 
-def plot_histogram_stack(labels, ratings, title):
+def plot_histogram_stack(labels, ratings, title, filename=None):
     '''Doesn't look as nice, don't use'''
     r = 5   # (Ratings range from 1 to 5)
 
@@ -100,12 +102,15 @@ def plot_histogram_stack(labels, ratings, title):
     n, bins, patches = plt.hist(ratings, r, 
         facecolor='green', histtype='barstacked')
 
+    plt.xticks(range(r+1), range(r+1))
     plt.xlabel('Ratings')
     plt.ylabel('Frequency')
     plt.title(title)
 
     plt.axis([1, r, 0, max(plot_ratings)])
 
+    if filename != None:
+        plt.savefig(filename)
     plt.show()
 
 '''Makes a ccdf given data'''
@@ -125,23 +130,10 @@ if __name__ == '__main__':
     movie_names, movie_genres, genres = data_io.read_movies('movies.txt')
     Y, movie_ratings = data_io.read_ratings('data.txt', movie_names)
 
-    popular = top_ten_popular(movie_ratings)
-    print popular
-    print [movie_names[movie] for movie in popular]
-    print [len(movie_ratings[movie]) for movie in popular]
-    print movie_ratings[popular[0]]
+    popular = genres['Film-Noir']
 
-    print "-"*50
-
-    popular = top_ten_rated(movie_ratings)
-    print popular
-    print [movie_names[movie] for movie in popular]
-    print [np.mean(movie_ratings[movie]) for movie in popular]
-
-    print movie_ratings['814']
-
-    plot_histogram([movie_names[movie] for movie in popular], 
+    plot_histogram_stack([movie_names[movie] for movie in popular], 
         [movie_ratings[movie] for movie in popular],
-        "Highest rated movies")
+        "Film Noir movies", "pictures/basic_genres_filmnoir.png")
 
 
