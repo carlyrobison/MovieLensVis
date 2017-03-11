@@ -25,11 +25,12 @@ def plot_points(labels, x, y, title):
     for label, x, y in zip(labels, x, y):
         plt.annotate(label,
             xy=(x, y), xytext=(-5, 5),
-            textcoords='offset points', ha='right', va='bottom')#,
+            textcoords='offset points', ha='right', va='bottom',
+            fontsize=9) #,
         #bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
         #arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
     
-    plt.axis([-3, 0], [-1, 1])
+    plt.axis([-3, 0, -1, 1])
 
     plt.grid(True)
 
