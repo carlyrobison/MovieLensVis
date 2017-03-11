@@ -40,7 +40,8 @@ def top_ten_rated(movie_ratings):
         avg_ratings = np.mean(movie_ratings[movie])
 
         # if we find a more popular movie, add it in
-        if avg_ratings > curr_min:
+        if avg_ratings > curr_min and \
+            len(movie_ratings[movie]) > 20:
             for i in range(len(rat)):
                 if rat[i] == curr_min:
                     ret[i] = movie
