@@ -10,7 +10,7 @@
 
 \newcommand{\boldline}[1]{\underline{\textbf{#1}}}
 \newcommand{\plotteddata}[3]{
-  \begin{figure}[h]
+  \begin{figure}[h!]
   \caption{#1}
   \centering
   \includegraphics[width=#3\textwidth]{#2}
@@ -39,53 +39,83 @@
 
 
 \section{Data Formatting}
-
-\subsection{Methods}
-
-\subsection{Modifications}
+We made three data structures to hold the movie name and genre data.  
+\begin{itemize}
+    \item movie_names: movie ID to movie name for plotting.
+    \item movie_genres: movie ID to the list of genres that it is categorized as.
+    \item genres: genre name to the set of movie IDs that fit in that genre.
+\end{itemize}
+These worked well for our purposes.
 
 
 
 \section{Basic Visualizations}
 
+\subsection{Packages Used}
+To plot the histograms, we used {\tt matplotlib}'s function {\tt pyplot.hist}.  This function has options for side-by-side data as well as stacked.
+
 \subsection{Methods}
+For categories 1 and 4, we counted the total number of 1s, 2s, etc., and plotted their frequencies.  
+
+For categories 2 and 3, we calculated the top ten movies and plotted the number of 1s, 2s, etc.\ that each movie got side by side.  For category 3, a na\"{i}ve try will pick up movies with only one rating of 5.  To ensure that the movies we found were actually good movies, we required our choices to have more than 20 ratings.
+
+We decided not to normalize the frequency data, since this way the movies which had more ratings are clearly distinguishable from those with smaller numbers.  This is especially relevant for category 3, since it shows how many more ratings \emph{Star Wars} got than, for example, \emph{Wallace \& Gromit}.
 
 \subsection{Observations}
-What, in general, did you observe? Did the results match what you would expect to see? How do the ratings from the most popular movies compare to the ratings of the best movies? How do the ratings of the three genres you chose compare to one another?
 \begin{enumerate}
-    \item All ratings in the MovieLens Dataset.
-    \item All ratings of the ten most popular movies (movies which have gotten the most ratings).
-    \item All ratings of the ten best movies (movies with the highest average ratings).
-    \item All ratings of movies from three genres of your choice (create three separate visualizations for this problem).
+    \item Most of the ratings in the dataset were 3s and 4s, with very few 1 ratings.  
+        \plotteddata{All ratings in the MovieLens Dataset.}{../pictures/basic_all}{.5}
+    \item Most of these movies were not only rated a lot, but rated fairly highly as well.  A notable exception is \emph{Liar Liar}, which has very few 5 ratings (mostly 4s and 3s).  This makes sense, because the movies which are watched the most are likely to have been promoted by people who watched them and liked them.
+        \plotteddata{All ratings of the ten most popular movies.}{../pictures/basic_popular}{.5}
+    \item As noted above, we restricted the movies we chose to have more than 20 ratings in order to be considered one of the ``best''.  We agree with most of the outputs; in particular, the fact that three of these movies are from the Wallace \& Gromit series was amusing.
+        \plotteddata{All ratings of the ten best movies.}{../pictures/basic_highest_20}{.5}
+    \item All ratings of movies from three genres of your choice.  We chose Comedy, Romance, and Western.  We looked at the same genres in the Matrix Factorization analysis.
+
+    How do the ratings of the three genres you chose compare to one another? TODO
+        \plotteddata{All ratings of Comedy movies.}{../pictures/basic_genres/basic_genres_Comedy}{.5}
+        \plotteddata{All ratings of Romance movies.}{../pictures/basic_genres/basic_genres_Romance}{.5}
+        \plotteddata{All ratings of Western movies.}{../pictures/basic_genres/basic_genres_Western}{.5}
 \end{enumerate}
+% Note to Carly: if these aren't the right graphs feel free to fix them; I don't remember which genres we chose
 
 
+
+\newpage
 
 \section{Matrix Factorization Visualization}
 
 \subsection{Packages Used}
+TODO
+\begin{itemize}
+    \item We used the code from the solutions to Homework 6 for factoring a matrix.
+\end{itemize}
 
 \subsection{Algorithm}
+TODO
 
 \subsection{Observations}
 Your report should contain a section dedicated to matrix factorization visualizations. What, in general, did you observe? Did the results match what you would expect to see? How does the visualization of the most popular movies compare to that of the best movies? How do the visualizations of the three genres you chose compare to one another?
+TODO
 
 
 
 \section{Conclusion}
 \subsection{Division of work}
-Shari:
+Shari did basic visualization and made the pretty rainbow histograms!
 
-Carly:
+Carly worked on matrix factorization and plotting the projections in 2D.
 
 \subsection{Discoveries}
 What are your conclusions/observations about the models you used and the visualizations generated?
+TODO
 
 \subsection{Challenges}
+TODO
 
-
+Shari forgot what a histogram was and had trouble getting the function to work, because she was trying to provide the wrong kinds of data.  But we figured it out, and got very pretty rainbow graphs in the end.
 
 \subsection{Concluding Remarks}
+TODO
 
 Our code is available at \href{https://github.com/carlyrobison/MovieLensVis/}{this} github repo.
 
