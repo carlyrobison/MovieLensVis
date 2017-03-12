@@ -136,11 +136,13 @@ if __name__ == '__main__':
     movie_names, movie_genres, genres = data_io.read_movies('movies.txt')
     Y, movie_ratings = data_io.read_ratings('data.txt', movie_names)
 
-    for genre in genres.keys():
-        popular = genres[genre]
-        plot_histogram_stack([movie_names[movie] for movie in popular], 
-            [movie_ratings[movie] for movie in popular],
-            genre + " movies", "pictures/basic_genres_" + genre + ".png")
+    plot_genre(genres)
+    plt.show()
 
+    popular = genres['Film-Noir']
+
+    plot_histogram_stack([movie_names[movie] for movie in popular], 
+        [movie_ratings[movie] for movie in popular],
+        "Film Noir movies", "pictures/basic_genres_filmnoir.png")
 
 
