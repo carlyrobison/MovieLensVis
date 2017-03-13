@@ -39,14 +39,15 @@
 
 
 \section{Data Formatting}
-We made three data structures to hold the movie name and genre data.  
+We made three dictionaries using the {\tt movies.txt} file for ease in generating graphs and in graphing movies by genre.  
 \begin{itemize}
-    \item movie_names: movie ID to movie name for plotting.
+    \item movie_names: movie ID to movie name. Used for plotting the movie name.
     \item movie_genres: movie ID to the list of genres that it is categorized as.
-    \item genres: genre name to the set of movie IDs that fit in that genre.
+    \item genres: genre name to the set of movie IDs that fit in that genre. Used for generating graphs by genre.
 \end{itemize}
-These worked well for our purposes.
+These structures worked well for our purposes.
 
+When extracting ratings from {\tt data.txt}, we put data into a dictionary of movie id to list of ratings, useful for the histograms, as well as the $Y_{ij}$ format necessary for matrix factorization.
 
 
 \section{Basic Visualizations}
@@ -55,28 +56,29 @@ These worked well for our purposes.
 To plot the histograms, we used {\tt matplotlib}'s function {\tt pyplot.hist}.  This function has options for side-by-side data as well as stacked.
 
 \subsection{Methods}
-For categories 1 and 4, we counted the total number of 1s, 2s, etc., and plotted their frequencies.  
+For visualizing all ratings in the data set and all ratings from certain genres, we counted the total number of 1s, 2s, etc., and plotted their frequencies. A histogram like this provides an accurate visualization of the distribution of ratings. 
 
-For categories 2 and 3, we calculated the top ten movies and plotted the number of 1s, 2s, etc.\ that each movie got side by side.  For category 3, a na\"{i}ve try will pick up movies with only one rating of 5.  To ensure that the movies we found were actually good movies, we required our choices to have more than 20 ratings.
+For visualizing the ten most popular or most highly rated, we calculated the top ten movies and plotted the number of 1s, 2s, etc.\ that each movie got side by side.  For highest average ratings, a na\"{i}ve try will pick up movies with only one rating of 5.  To ensure that the movies we found were actually good movies, we required our choices to have more than 20 ratings.
 
-We decided not to normalize the frequency data, since this way the movies which had more ratings are clearly distinguishable from those with smaller numbers.  This is especially relevant for category 3, since it shows how many more ratings \emph{Star Wars} got than, for example, \emph{Wallace \& Gromit}.
+We decided not to normalize the frequency data, since this way the movies which had more ratings are clearly distinguishable from those with smaller numbers.  This is especially relevant for the visualization of the best movies, since it shows how many more ratings \emph{Star Wars} got than, for example, \emph{Wallace \& Gromit}.
 
 \subsection{Observations}
 \begin{enumerate}
     \item Most of the ratings in the dataset were 3s and 4s, with very few 1 ratings.  
-        \plotteddata{All ratings in the MovieLens Dataset.}{../pictures/basic_all}{.5}
+        \plotteddata{All ratings in the MovieLens Dataset.}{../pictures/using/basic_all}{.5}
     \item Most of these movies were not only rated a lot, but rated fairly highly as well.  A notable exception is \emph{Liar Liar}, which has very few 5 ratings (mostly 4s and 3s).  This makes sense, because the movies which are watched the most are likely to have been promoted by people who watched them and liked them.
-        \plotteddata{All ratings of the ten most popular movies.}{../pictures/basic_popular}{.5}
+        \plotteddata{All ratings of the ten most popular movies.}{../pictures/using/basic_popular}{.5}
     \item As noted above, we restricted the movies we chose to have more than 20 ratings in order to be considered one of the ``best''.  We agree with most of the outputs; in particular, the fact that three of these movies are from the Wallace \& Gromit series was amusing.
-        \plotteddata{All ratings of the ten best movies.}{../pictures/basic_highest_20}{.5}
-    \item All ratings of movies from three genres of your choice.  We chose Comedy, Romance, and Western.  We looked at the same genres in the Matrix Factorization analysis.
+        \plotteddata{All ratings of the ten best movies.}{../pictures/using/basic_highest_20}{.5}
+    \item All ratings of movies from three genres of your choice.  We chose Comedy, War, and Western.  We looked at the same genres in the Matrix Factorization analysis.
 
     How do the ratings of the three genres you chose compare to one another? TODO
         \plotteddata{All ratings of Comedy movies.}{../pictures/basic_genres/basic_genres_Comedy}{.5}
-        \plotteddata{All ratings of Romance movies.}{../pictures/basic_genres/basic_genres_Romance}{.5}
+        \plotteddata{All ratings of War movies.}{../pictures/basic_genres/basic_genres_War}{.5}
         \plotteddata{All ratings of Western movies.}{../pictures/basic_genres/basic_genres_Western}{.5}
 \end{enumerate}
 % Note to Carly: if these aren't the right graphs feel free to fix them; I don't remember which genres we chose
+% Note to Shari: yeah we settled on War not Romance.
 
 
 
@@ -85,17 +87,36 @@ We decided not to normalize the frequency data, since this way the movies which 
 \section{Matrix Factorization Visualization}
 
 \subsection{Packages Used}
-TODO
-\begin{itemize}
-    \item We used the code from the solutions to Homework 6 for factoring a matrix.
-\end{itemize}
+We used the code from the updated solutions to Homework 6 for matrix factorization and training on $Y$. We also used {\tt numpy.linalg.svd} to perform SVD on the component matrices $U$ and $V$.
 
 \subsection{Algorithm}
-TODO
+We set M to the number of users + 1, because users are 1-indexed and the matrix is 0-indexed. Similarly we set N to the number of movies + 1.
+
+In getting the matrix factorization, we adjusted the regularization parameter and the learning rate. We saw last week that a regularization parameter of about .1 worked well for all numbers of data points, so we used that and it worked well. We also started with a learning rate of 0.03 as in last week's set but the learning didn't take that long so we decreased it to 0.01 to make sure we weren't overshooting an optimum. Our final mean error was about .26. We use the same stopping condition as in the HW6 solutions: when the change in error is small enough or when the error starts to rise.
 
 \subsection{Observations}
-Your report should contain a section dedicated to matrix factorization visualizations. What, in general, did you observe? Did the results match what you would expect to see? How does the visualization of the most popular movies compare to that of the best movies? How do the visualizations of the three genres you chose compare to one another?
-TODO
+The axes didn't make much sense to us, but in matrix factorization and SVD they aren't supposed to make sense, so this is unsurprising. In general we saw similar movies graphed near each other, but we are not that knowledgeable about movies, so we can't say this for certain. We were surprised at the varied locations of movies within each series (e.g. Star Wars, Star Trek, Wallace \& Gromit) -- we would have expected these to be closer together.
+
+\begin{enumerate}
+    \item We asked a friend not in this class for ten movies of their choice, and plotted them. In this graph we can see two space movies, Star Trek and E.T., are closer to each other than they are, say, to The Graduate.
+        \plotteddata{Handpicked movie visualization.}{../pictures/using/handpicked_vis}{.5}
+    \item We also plotted all movies with ``star'' in their title, as well as some extra Star Wars films. We were surprised to see that the Star Wars and Star Trek movies were not highly clustered -- instead, they were spread over the entire output space.
+        \plotteddata{``Star'' movie visualization.}{../pictures/using/star_vis}{.5}
+    \item The most popular movies are highly clustered at the mean of the output space. This makes sense, because if people from all walks of life like these movies then they will be popular, and the matrix factorization won't get any utility out of pigeonholing these movies. The exceptions are Return of the Jedi, Independence Day, and Contact.
+
+    Frankly, the fact that so many of the most popular movies are some kind of space/war makes sense given that statistically most movie raters are young, white, and male.
+        \plotteddata{Visualization of the ten most popular movies.}{../pictures/popular_vis}{.5}
+    \item We used the same list of most popular movies here as in the histogram; specifically, those with more than 20 ratings overall. The highest rated movies are significantly more spread out than the most popular movies, and they are spread out along the vertical axis, which indicates that the horizontal axis could be some measure of the average rating of a movie. Here we see the Wallace \& Gromit movies have a large spread.
+        \plotteddata{Visualization of the ten best movies.}{../pictures/ratings_vis}{.5}
+    \item Movies from three genres of your choice.  We chose Comedy, War, and Western. We looked at these same genres in the histogram analysis. In the visualization, we chose 20 random movies from each genre.
+
+    We chose these genres because they were the most highly clustered. Comedy movies seem to occupy the upper left section of the graph. Surprisingly, the War films seem to cluster in the same quadrant as the Comedy films! We also notice that most of the older films (pre 1960) are high on the vertical axis.
+
+    The Western genre, for the most part, clusters in the bottom center part of the graph. Because the Western is a very defined genre, viewers might like Western movies for their Westernness (plot, design, etc.) rather than for their filmmakers or actors. THus this high clustering is expected.
+        \plotteddata{Visualization of Comedy movies.}{../pictures/using/comedy_vis}{.5}
+        \plotteddata{Visualization of War movies.}{../pictures/using/war_vis}{.5}
+        \plotteddata{Visualization of Western movies.}{../pictures/using/western_vis}{.5}
+\end{enumerate}
 
 
 
@@ -106,16 +127,17 @@ Shari did basic visualization and made the pretty rainbow histograms!
 Carly worked on matrix factorization and plotting the projections in 2D.
 
 \subsection{Discoveries}
-What are your conclusions/observations about the models you used and the visualizations generated?
-TODO
+We concluded that the axes generated make no sense to humans, but that the model does preserve closeness in similar movies. The histogram visualizations helped us to understand that ratings are skewed positively for all movies, and the visualizations of the matrix factorization helped us see that genres are a good indicator of a person's preference.
 
 \subsection{Challenges}
-TODO
+Carly tried to import the data as usual, but kept coming across weird extra characters. After an hour and a single letter change to python's {\tt open} command, the problem went away.
 
-Shari forgot what a histogram was and had trouble getting the function to work, because she was trying to provide the wrong kinds of data.  But we figured it out, and got very pretty rainbow graphs in the end.
+Shari forgot what a histogram was and had trouble getting the function to work, because she was trying to provide the wrong kinds of data. But we figured it out, and got very pretty rainbow graphs in the end.
+
+Because the axes change each time we perform matrix factorization (randomness and local equilibria), we added a feature to save our matrices and reload them. This also saved on time because we didn't need to recompute everything.
 
 \subsection{Concluding Remarks}
-TODO
+This project reminded us just how much we love Wallace \& Gromit. After we're done with finals, we'll probably go watch that.
 
 Our code is available at \href{https://github.com/carlyrobison/MovieLensVis/}{this} github repo.
 
